@@ -2,13 +2,13 @@
 node_modules/
 npm-debug.log
 yarn-error.log
-yarn-debug.log
 
 # Build artifacts
 web-ext-artifacts/
 *.zip
 
-
+# Web-ext config backups
+web-ext.config.*.cjs
 
 # Editor files
 .vscode/
@@ -16,7 +16,3 @@ web-ext-artifacts/
 *.swp
 *.swo
 .DS_Store
-
-# Temporary files
-tmp/
-temp/

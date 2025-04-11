@@ -6,7 +6,7 @@ This document outlines the step-by-step development plan for the Fireproxy Firef
 
 - [x] Create basic extension structure (manifest.json, icons, etc.)
 - [x] Set up development environment for Firefox extension testing
-- [ ] Create initial extension popup UI skeleton
+- [x] Create initial extension popup UI skeleton
 
 ## Core Functionality
 
