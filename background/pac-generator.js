@@ -1,14 +1,16 @@
 export function generatePACScript(domains, proxyConfig) {
   const proxy = `SOCKS5 ${proxyConfig.host}:${proxyConfig.port}`;
   
-  // Generate domain matching conditions with wildcard support
+  // Generate conditions that match domain and all subdomains
   const conditions = domains
     .map(domain => {
-      const cleanDomain = domain.replace(/^\./, '');
-      return `shExpMatch(host, '*.${cleanDomain}') || host == '${cleanDomain}'`;
+      // Remove any leading dots and whitespace
+      const cleanDomain = domain.replace(/^\./, '').trim();
+      // Create match for domain and all subdomains
+      return `(host === '${cleanDomain}' || shExpMatch(host, '*.${cleanDomain}'))`;
     })
     .join(' || \n      ');
-  
+
   return `
     function FindProxyForURL(url, host) {
       // Match domain and all subdomains
