@@ -1,0 +1,15 @@
+{
+  "name": "fireproxy",
+  "version": "0.1.0",
+  "description": "Firefox extension to route traffic for specific domains through a SOCKS proxy",
+  "scripts": {
+    "start": "web-ext run --config=web-ext.config.js",
+    "build": "web-ext build --config=web-ext.config.js",
+    "lint": "web-ext lint --config=web-ext.config.js",
+    "watch": "node dev-tools/watch.js"
+  },
+  "devDependencies": {
+    "web-ext": "^7.2.0"
+  },
+  "private": true
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Fireproxy</h1>
+    
+    <div class="toggle-container">
+      <label class="switch">
+        <input type="checkbox" id="enableToggle">
+        <span class="slider round"></span>
+      </label>
+      <span id="statusText">Disabled</span>
+    </div>
+    
+    <div class="domain-input">
+      <input type="text" id="domainInput" placeholder="Enter domain (e.g., example.com)">
+      <button id="addDomain">Add</button>
+    </div>
+    
+    <div class="domain-list-container">
+      <h2>Proxied Domains</h2>
+      <ul id="domainList"></ul>
+    </div>
+    
+    <div class="scan-container">
+      <button id="scanPage">Scan Current Page</button>
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
