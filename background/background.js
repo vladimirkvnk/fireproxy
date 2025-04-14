@@ -3,8 +3,12 @@ import {
   updateProxySettings,
   clearProxySettings,
   getProxyState,
-  setProxyDomains
+  setProxyDomains,
+  setProxyConfig,
+  setProxyDNS
 } from './proxy-config.js';
+
+import { DEFAULT_PROXY } from './pac-generator.js';
 
 import {
   initDomainManagement,
@@ -132,6 +136,26 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     case 'getProxyConfig':
       sendResponse({ config: getProxyState() });
       break;
+      
+    case 'updateProxyConfig':
+      setProxyConfig(message.config).then(() => {
+        sendResponse({ success: true, config: getProxyState() });
+      });
+      return true;
+      
+    case 'updateProxyDNS':
+      setProxyDNS(message.proxyDNS).then(() => {
+        sendResponse({ success: true });
+      });
+      return true;
+      
+    case 'resetProxyConfig':
+      setProxyConfig(DEFAULT_PROXY).then(() => {
+        setProxyDNS(true).then(() => {
+          sendResponse({ success: true, config: getProxyState() });
+        });
+      });
+      return true;
       
     case 'getInterceptorStats':
       sendResponse({ stats: getInterceptorStats() });

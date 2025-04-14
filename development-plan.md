@@ -27,10 +27,10 @@ This document outlines the step-by-step development plan for the Fireproxy Firef
 
 ## User Interface
 
-- [ ] Design and implement popup UI
-  - [ ] Create domain input form
-  - [ ] Implement domain list display with delete functionality
-  - [ ] Add extension enable/disable toggle
+- [x] Design and implement popup UI
+  - [x] Create domain input form
+  - [x] Implement domain list display with delete functionality
+  - [x] Add extension enable/disable toggle
 
 - [ ] Implement domain scanning feature
   - [ ] Create page resource scanner

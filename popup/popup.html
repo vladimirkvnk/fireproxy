@@ -1,41 +1,185 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="popup.css">
-</head>
-<body>
-  <div class="container">
-    <h1>Fireproxy</h1>
-    
-    <div class="toggle-container">
-      <label class="switch">
-        <input type="checkbox" id="enableToggle">
-        <span class="slider round"></span>
-      </label>
-      <span id="statusText">Disabled</span>
-    </div>
-    
-    <div id="statusMessage" class="status-message"></div>
-    
-    <div class="domain-input">
-      <input type="text" id="domainInput" placeholder="Enter domain (e.g., example.com)">
-      <button id="addDomain">Add</button>
-    </div>
-    
-    <div class="domain-list-container">
-      <h2>Proxied Domains</h2>
-      <ul id="domainList"></ul>
-      <div class="domain-actions">
-        <button id="clearAllDomains" class="danger-button">Clear All Domains</button>
-      </div>
-    </div>
-    
-    <div class="scan-container">
-      <button id="scanPage">Scan Current Page</button>
-    </div>
-  </div>
-  
-  <script src="popup.js"></script>
-</body>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="popup.css" />
+    </head>
+    <body>
+        <div class="container">
+            <header class="header">
+                <h1>Fireproxy</h1>
+                <div class="version">v0.5.0</div>
+            </header>
+
+            <div class="main-toggle-container">
+                <div class="toggle-container">
+                    <label class="switch">
+                        <input type="checkbox" id="enableToggle" />
+                        <span class="slider round"></span>
+                    </label>
+                    <span id="statusText">Disabled</span>
+                </div>
+                <div class="proxy-info">
+                    <span id="proxyHost">127.0.0.1:8080</span>
+                </div>
+            </div>
+
+            <div id="statusMessage" class="status-message"></div>
+
+            <div class="tabs">
+                <button class="tab-button active" data-tab="domains">
+                    Domains
+                </button>
+                <button class="tab-button" data-tab="stats">Statistics</button>
+                <button class="tab-button" data-tab="settings">Settings</button>
+            </div>
+
+            <div class="tab-content" id="domains-tab">
+                <div class="domain-input">
+                    <input
+                        type="text"
+                        id="domainInput"
+                        placeholder="Enter domain (e.g., example.com)"
+                    />
+                    <button id="addDomain">Add</button>
+                </div>
+
+                <div class="domain-list-container">
+                    <div class="domain-header">
+                        <h2>Proxied Domains</h2>
+                        <span class="domain-count" id="domainCount"
+                            >0 domains</span
+                        >
+                    </div>
+                    <ul id="domainList" class="domain-list"></ul>
+                    <div class="domain-actions">
+                        <button id="importDomains" class="secondary-button">
+                            Import
+                        </button>
+                        <button id="exportDomains" class="secondary-button">
+                            Export
+                        </button>
+                        <button id="clearAllDomains" class="danger-button">
+                            Clear All
+                        </button>
+                    </div>
+                </div>
+
+                <div class="scan-container">
+                    <button id="scanPage" class="action-button">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                        Scan Current Page
+                    </button>
+                </div>
+            </div>
+
+            <div class="tab-content hidden" id="stats-tab">
+                <div class="stats-container">
+                    <div class="stats-header">
+                        <h2>Request Statistics</h2>
+                        <button id="resetStats" class="small-button">
+                            Reset
+                        </button>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value" id="totalRequests">0</div>
+                            <div class="stat-label">Total Requests</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="interceptedRequests">
+                                0
+                            </div>
+                            <div class="stat-label">Proxied Requests</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="proxyPercentage">
+                                0%
+                            </div>
+                            <div class="stat-label">Proxy Percentage</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="domainsMatched">0</div>
+                            <div class="stat-label">Domains Matched</div>
+                        </div>
+                    </div>
+
+                    <div class="top-domains">
+                        <h3>Top Proxied Domains</h3>
+                        <ul id="topDomainsList" class="top-domains-list"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content hidden" id="settings-tab">
+                <div class="settings-container">
+                    <h2>Proxy Settings</h2>
+
+                    <div class="setting-item">
+                        <label for="proxyType">Proxy Type:</label>
+                        <select id="proxyType">
+                            <option value="socks5">SOCKS5</option>
+                            <option value="socks4">SOCKS4</option>
+                            <option value="http">HTTP</option>
+                            <option value="https">HTTPS</option>
+                        </select>
+                    </div>
+
+                    <div class="setting-item">
+                        <label for="proxyHost">Proxy Host:</label>
+                        <input
+                            type="text"
+                            id="proxyHostInput"
+                            placeholder="127.0.0.1"
+                        />
+                    </div>
+
+                    <div class="setting-item">
+                        <label for="proxyPort">Proxy Port:</label>
+                        <input
+                            type="number"
+                            id="proxyPortInput"
+                            placeholder="8080"
+                        />
+                    </div>
+
+                    <div class="setting-item checkbox">
+                        <label>
+                            <input type="checkbox" id="proxyDNS" checked />
+                            Proxy DNS Requests
+                        </label>
+                    </div>
+
+                    <div class="setting-actions">
+                        <button id="saveSettings" class="action-button">
+                            Save Settings
+                        </button>
+                        <button id="resetSettings" class="secondary-button">
+                            Reset to Defaults
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <span>Made with ❤️ for privacy</span>
+            </footer>
+        </div>
+
+        <script src="popup.js"></script>
+    </body>
 </html>
