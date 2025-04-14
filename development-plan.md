@@ -15,10 +15,10 @@ This document outlines the step-by-step development plan for the Fireproxy Firef
   - [x] Implement proxy.settings API integration
   - [x] Add DNS proxy configuration
 
-- [ ] Implement domain management
-  - [ ] Create storage module for saving/loading domain lists
-  - [ ] Implement domain validation functions
-  - [ ] Create domain list CRUD operations
+- [x] Implement domain management
+  - [x] Create storage module for saving/loading domain lists
+  - [x] Implement domain validation functions
+  - [x] Create domain list CRUD operations
 
 - [ ] Implement request interception
   - [ ] Set up webRequest API listeners
