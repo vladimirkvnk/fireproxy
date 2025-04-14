@@ -19,13 +19,23 @@ import {
   isDomainMatched
 } from './domain-management.js';
 
+import {
+  initRequestInterceptor,
+  setInterceptorEnabled,
+  updateInterceptorOptions,
+  getInterceptorStats,
+  resetInterceptorStats,
+  getDiscoveredDomains
+} from './request-interceptor.js';
+
 console.log("Fireproxy background script loaded");
 
 // Initialize extension state
 browser.runtime.onInstalled.addListener(async () => {
-  // Initialize both modules
+  // Initialize all modules
   await initDomainManagement();
   await initProxyConfig();
+  await initRequestInterceptor();
   
   // Sync the domains between domain management and proxy config
   const domains = getAllDomains();
@@ -49,6 +59,7 @@ browser.storage.onChanged.addListener(changes => {
 browser.runtime.onStartup.addListener(async () => {
   await initDomainManagement();
   await initProxyConfig();
+  await initRequestInterceptor();
 });
 
 // Set up message handlers for popup and content scripts
@@ -122,6 +133,24 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
       sendResponse({ config: getProxyState() });
       break;
       
+    case 'getInterceptorStats':
+      sendResponse({ stats: getInterceptorStats() });
+      break;
+      
+    case 'resetInterceptorStats':
+      resetInterceptorStats();
+      sendResponse({ success: true });
+      break;
+      
+    case 'updateInterceptorOptions':
+      updateInterceptorOptions(message.options);
+      sendResponse({ success: true });
+      break;
+      
+    case 'getDiscoveredDomains':
+      sendResponse({ domains: getDiscoveredDomains() });
+      break;
+      
     default:
       console.log('Unknown message type:', message.type);
       sendResponse({ error: 'Unknown message type' });
@@ -144,4 +173,13 @@ export const domainManagement = {
   isValidDomain,
   normalizeDomain,
   isDomainMatched
+};
+
+// Export request interceptor functions
+export const requestInterceptor = {
+  getInterceptorStats,
+  resetInterceptorStats,
+  updateInterceptorOptions,
+  getDiscoveredDomains,
+  setInterceptorEnabled
 };

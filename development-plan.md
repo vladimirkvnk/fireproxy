@@ -20,10 +20,10 @@ This document outlines the step-by-step development plan for the Fireproxy Firef
   - [x] Implement domain validation functions
   - [x] Create domain list CRUD operations
 
-- [ ] Implement request interception
-  - [ ] Set up webRequest API listeners
-  - [ ] Create domain extraction from requests
-  - [ ] Implement request filtering based on domain lists
+- [x] Implement request interception
+  - [x] Set up webRequest API listeners
+  - [x] Create domain extraction from requests
+  - [x] Implement request filtering based on domain lists
 
 ## User Interface
 
