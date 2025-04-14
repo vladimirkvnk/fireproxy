@@ -10,10 +10,10 @@ This document outlines the step-by-step development plan for the Fireproxy Firef
 
 ## Core Functionality
 
-- [ ] Implement proxy configuration module
-  - [ ] Create a PAC script generator for dynamic proxy routing
-  - [ ] Implement proxy.settings API integration
-  - [ ] Add DNS proxy configuration
+- [x] Implement proxy configuration module
+  - [x] Create a PAC script generator for dynamic proxy routing
+  - [x] Implement proxy.settings API integration
+  - [x] Add DNS proxy configuration
 
 - [ ] Implement domain management
   - [ ] Create storage module for saving/loading domain lists
