@@ -8,7 +8,7 @@
         <div class="container">
             <header class="header">
                 <h1>Fireproxy</h1>
-                <div class="version">v0.5.0</div>
+                <div class="version">v0.6.0</div>
             </header>
 
             <div class="main-toggle-container">
@@ -65,24 +65,55 @@
                     </div>
                 </div>
 
-                <div class="scan-container">
-                    <button id="scanPage" class="action-button">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-                            <circle cx="11" cy="11" r="8" />
-                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                        </svg>
-                        Scan Current Page
-                    </button>
+                <div class="scan-section">
+                    <div class="section-header">
+                        <h2>Domain Scanner</h2>
+                        <div class="auto-scan-toggle">
+                            <label>
+                                <input type="checkbox" id="autoScanToggle" />
+                                Auto-scan
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="scan-container">
+                        <button id="scanPage" class="action-button">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <circle cx="11" cy="11" r="8" />
+                                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                            </svg>
+                            Scan Page Resources
+                        </button>
+                    </div>
+                    
+                    <div id="scanResults" class="scan-results hidden">
+                        <div class="scan-results-header">
+                            <h3>Discovered Domains</h3>
+                            <div class="scan-actions">
+                                <button id="clearScanResults" class="small-button secondary-button">Clear</button>
+                                <button id="addSelectedDomains" class="small-button">Add Selected</button>
+                            </div>
+                        </div>
+                        
+                        <div class="scan-results-list-container">
+                            <ul id="discoveredDomainsList" class="discovered-domains-list"></ul>
+                        </div>
+                        
+                        <div class="select-actions">
+                            <button id="selectAllDomains" class="text-button">Select All</button>
+                            <button id="deselectAllDomains" class="text-button">Deselect All</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 

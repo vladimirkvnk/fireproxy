@@ -32,10 +32,10 @@ This document outlines the step-by-step development plan for the Fireproxy Firef
   - [x] Implement domain list display with delete functionality
   - [x] Add extension enable/disable toggle
 
-- [ ] Implement domain scanning feature
-  - [ ] Create page resource scanner
-  - [ ] Implement domain collection from active tab
-  - [ ] Design UI for displaying and selecting discovered domains
+- [x] Implement domain scanning feature
+  - [x] Create page resource scanner
+  - [x] Implement domain collection from active tab
+  - [x] Design UI for displaying and selecting discovered domains
 
 ## Testing & Refinement
 

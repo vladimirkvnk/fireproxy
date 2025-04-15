@@ -442,6 +442,154 @@ button svg {
   gap: 8px;
 }
 
+/* Scanner styling */
+.scan-section {
+  margin-top: 16px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.auto-scan-toggle {
+  font-size: 13px;
+  color: #666;
+  display: flex;
+  align-items: center;
+}
+
+.auto-scan-toggle input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.scan-results {
+  margin-top: 16px;
+  background-color: #fff;
+  border-radius: 6px;
+  padding: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.scan-results.hidden {
+  display: none;
+}
+
+.scan-results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.scan-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.scan-results-list-container {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.discovered-domains-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.discovered-domains-list li {
+  display: flex;
+  padding: 6px 8px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 13px;
+  align-items: center;
+}
+
+.discovered-domains-list li:hover {
+  background-color: #f5f5f5;
+}
+
+.discovered-domains-list li:last-child {
+  border-bottom: none;
+}
+
+.domain-checkbox {
+  margin-right: 8px;
+}
+
+.domain-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.domain-name {
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.domain-meta {
+  font-size: 11px;
+  color: #666;
+}
+
+.resource-types {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.resource-type {
+  font-size: 10px;
+  padding: 1px 4px;
+  background-color: #e0e0e0;
+  border-radius: 3px;
+  color: #555;
+}
+
+.select-actions {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.text-button {
+  background: none;
+  border: none;
+  color: #2196F3;
+  padding: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.text-button:hover {
+  text-decoration: underline;
+  background-color: transparent;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+  margin-right: 4px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 /* Footer */
 .footer {
   text-align: center;
