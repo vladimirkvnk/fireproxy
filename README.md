@@ -66,8 +66,6 @@ npm test
 node tests/cli-test-runner.js
 ```
 
-You can also open `tests/test-runner.html` in Firefox to run tests with a graphical interface.
-
 ### Building for Distribution
 
 ```bash
