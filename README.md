@@ -16,8 +16,6 @@ A Firefox extension that routes traffic for specific domains through a SOCKS pro
 
 ## Documentation
 
-- [Installation Guide](docs/installation.md)
-- [Usage Guide](docs/usage-guide.md)
 - [Features and Settings Reference](docs/features-settings.md)
 - [Troubleshooting Guide](docs/troubleshooting.md)
 
