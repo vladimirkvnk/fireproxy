@@ -3,7 +3,8 @@
     "start": "web-ext run --config=web-ext.config.cjs",
     "build": "web-ext build --config=web-ext.config.cjs",
     "lint": "web-ext lint --config=web-ext.config.cjs",
-    "watch": "node dev-tools/watch.js"
+    "watch": "node dev-tools/watch.js",
+    "test": "node tests/cli-test-runner.js"
   },
   "devDependencies": {
     "web-ext": "^7.2.0"

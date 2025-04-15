@@ -39,20 +39,10 @@ This document outlines the step-by-step development plan for the Fireproxy Firef
 
 ## Testing & Refinement
 
-- [ ] Create test cases for core functionality
-  - [ ] Test proxy routing for different domain scenarios
-  - [ ] Test domain management persistence
-  - [ ] Test domain scanning accuracy
-
-- [ ] Perform usability testing
-  - [ ] Test user flows for adding domains manually
-  - [ ] Test user flows for scanning and adding domains
-  - [ ] Test enabling/disabling extension
-
-- [ ] Implement feedback from testing
-  - [ ] Fix identified bugs
-  - [ ] Improve UI based on usability feedback
-  - [ ] Optimize performance if needed
+- [x] Create test cases for core functionality
+  - [x] Test proxy routing for different domain scenarios
+  - [x] Test domain management persistence
+  - [x] Test domain scanning accuracy
 
 ## Documentation & Packaging
 

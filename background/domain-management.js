@@ -47,6 +47,11 @@ export function isValidDomain(domain) {
   // Remove leading dots
   domainOnly = domainOnly.replace(/^\./, '');
   
+  // Special case for localhost
+  if (domainOnly === 'localhost') {
+    return true;
+  }
+  
   // If it's an IP address
   const ipRegex = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
   if (ipRegex.test(domainOnly)) {
@@ -56,6 +61,13 @@ export function isValidDomain(domain) {
       const num = parseInt(octet, 10);
       return num >= 0 && num <= 255;
     });
+  }
+  
+  // Check for Internationalized Domain Names (IDN) in Punycode format (xn--...)
+  if (domainOnly.includes('xn--')) {
+    // Simple check for IDN format - more validation could be added if needed
+    const idnRegex = /^([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z0-9\-]{2,}$/;
+    return idnRegex.test(domainOnly);
   }
   
   // Regular domain validation

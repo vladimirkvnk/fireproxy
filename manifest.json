@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Fireproxy",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Route traffic for specific domains through a SOCKS proxy server, including DNS requests",
   "icons": {
     "48": "icons/fireproxy-48.png",
