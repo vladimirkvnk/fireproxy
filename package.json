@@ -1,13 +1,13 @@
 {
   "scripts": {
-    "start": "web-ext run --config=web-ext.config.cjs",
-    "build": "web-ext build --config=web-ext.config.cjs",
-    "lint": "web-ext lint --config=web-ext.config.cjs",
+    "start": "web-ext run --config=web-ext.config.mjs",
+    "build": "web-ext build --config=web-ext.config.mjs",
+    "lint": "web-ext lint --config=web-ext.config.mjs",
     "watch": "node dev-tools/watch.js",
     "test": "node tests/cli-test-runner.js"
   },
   "devDependencies": {
-    "web-ext": "^7.2.0"
+    "web-ext": "^8.5.0"
   },
   "private": true
 }

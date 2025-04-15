@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   sourceDir: ".",
   artifactsDir: "./web-ext-artifacts",
   ignoreFiles: [
@@ -10,14 +10,14 @@ module.exports = {
     "dev-tools/",
     ".gitignore",
     "package.json",
-    "package-lock.json"
+    "package-lock.json",
   ],
   run: {
     firefox: "firefox",
     browserConsole: true,
-    startUrl: ["about:debugging#/runtime/this-firefox"]
+    startUrl: ["about:debugging#/runtime/this-firefox"],
   },
   build: {
-    overwriteDest: true
-  }
+    overwriteDest: true,
+  },
 };
