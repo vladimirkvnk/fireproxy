@@ -1,4 +1,19 @@
 /**
+ * Convert CIDR mask to netmask format
+ * @param {number} cidr - CIDR mask (0-32)
+ * @returns {string} Netmask in dotted decimal notation
+ */
+function cidrToNetmask(cidr) {
+  const mask = (0xffffffff << (32 - cidr)) >>> 0;
+  return [
+    (mask >>> 24) & 0xff,
+    (mask >>> 16) & 0xff,
+    (mask >>> 8) & 0xff,
+    mask & 0xff
+  ].join('.');
+}
+
+/**
  * Generate a Proxy Auto-Configuration (PAC) script for dynamic proxy routing
  * @param {Array<string>} domains - List of domains to route through proxy
  * @param {Object} proxyConfig - Configuration for the proxy server
@@ -34,6 +49,28 @@ export function generatePACScript(domains, proxyConfig) {
     .map(domain => {
       // Remove any leading dots and whitespace
       const cleanDomain = domain.replace(/^\./,'').trim();
+      
+      // Check if it's CIDR notation (IP with subnet mask)
+      const cidrRegex = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d{1,2}$/;
+      if (cidrRegex.test(cleanDomain)) {
+        const [ip, mask] = cleanDomain.split('/');
+        const netmask = cidrToNetmask(parseInt(mask, 10));
+        return `isInNet(host, "${ip}", "${netmask}")`;
+      }
+
+      // Check if it's an IP address with port
+      const ipWithPortRegex = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d+$/;
+      if (ipWithPortRegex.test(cleanDomain)) {
+        const [ip, port] = cleanDomain.split(':');
+        return `(host === '${ip}' && url.indexOf(':${port}') !== -1)`;
+      }
+      
+      // Check if it's an IP address without port
+      const ipRegex = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
+      if (ipRegex.test(cleanDomain)) {
+        return `host === '${cleanDomain}'`;
+      }
+      
       // Create match for domain and all subdomains
       return `(host === '${cleanDomain}' || shExpMatch(host, '*.${cleanDomain}'))`;
     })
@@ -41,7 +78,12 @@ export function generatePACScript(domains, proxyConfig) {
 
   return `
     function FindProxyForURL(url, host) {
-      // Skip localhost and private IP addresses
+      // First check if domain/IP is explicitly configured for proxy
+      if (${conditions || 'false'}) {
+        return '${proxyString}';
+      }
+
+      // Skip localhost and private IP addresses for non-configured domains
       if (isPlainHostName(host) ||
           isInNet(host, "10.0.0.0", "255.0.0.0") ||
           isInNet(host, "172.16.0.0", "255.240.0.0") ||
@@ -50,10 +92,6 @@ export function generatePACScript(domains, proxyConfig) {
         return "DIRECT";
       }
 
-      // Match domain and all subdomains
-      if (${conditions || 'false'}) {
-        return '${proxyString}';
-      }
       return 'DIRECT';
     }
   `.trim();

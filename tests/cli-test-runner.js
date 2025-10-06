@@ -77,7 +77,13 @@ function testDomainValidation() {
     'sub.example.co.uk',
     'xn--80aswg.xn--p1ai',  // IDN
     '192.168.1.1',           // IP address
-    'localhost'
+    'localhost',
+    '172.20.68.57:5601',     // IP with port
+    '10.0.0.1:8080',         // IP with port
+    '127.0.0.1:3000',        // IP with port
+    '172.20.0.0/16',         // CIDR notation
+    '192.168.1.0/24',        // CIDR notation
+    '10.0.0.0/8'             // CIDR notation
   ];
   
   const invalidDomains = [
@@ -86,7 +92,10 @@ function testDomainValidation() {
     '.com',
     'http://example.com',    // With protocol
     'example.com/path',      // With path
-    'user@example.com'       // Email-like
+    'user@example.com',      // Email-like
+    '172.20.0.0/33',         // Invalid CIDR mask
+    '256.1.1.1/16',          // Invalid IP in CIDR
+    '192.168.1.0/'           // Incomplete CIDR
   ];
   
   // Test valid domains
@@ -222,7 +231,13 @@ function testDomainNormalization() {
     { input: 'example.com:8080', expected: 'example.com' },
     { input: '.example.com', expected: 'example.com' },
     { input: 'sub.example.com', expected: 'sub.example.com' },
-    { input: '  example.com  ', expected: 'example.com' }
+    { input: '  example.com  ', expected: 'example.com' },
+    { input: '172.20.68.57:5601', expected: '172.20.68.57:5601' },
+    { input: '10.0.0.1:8080', expected: '10.0.0.1:8080' },
+    { input: 'http://127.0.0.1:3000/path', expected: '127.0.0.1:3000' },
+    { input: '172.20.0.0/16', expected: '172.20.0.0/16' },
+    { input: 'http://192.168.1.0/24', expected: '192.168.1.0/24' },
+    { input: '10.0.0.0/8', expected: '10.0.0.0/8' }
   ];
   
   for (const testCase of testCases) {

@@ -52,15 +52,36 @@ export function isValidDomain(domain) {
     return true;
   }
   
-  // If it's an IP address
-  const ipRegex = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
-  if (ipRegex.test(domainOnly)) {
-    // Validate each octet is between 0-255
-    const octets = domainOnly.split('.');
-    return octets.every(octet => {
+  // Check for CIDR notation (IP with subnet mask)
+  const cidrRegex = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d{1,2}$/;
+  if (cidrRegex.test(domainOnly)) {
+    const [ip, mask] = domainOnly.split('/');
+    const octets = ip.split('.');
+    const validIP = octets.every(octet => {
       const num = parseInt(octet, 10);
       return num >= 0 && num <= 255;
     });
+    
+    const maskNum = parseInt(mask, 10);
+    return validIP && maskNum >= 0 && maskNum <= 32;
+  }
+
+  // Check for IP address with optional port
+  const ipWithPortRegex = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(:\d+)?$/;
+  if (ipWithPortRegex.test(domainOnly)) {
+    const [ip, port] = domainOnly.split(':');
+    const octets = ip.split('.');
+    const validIP = octets.every(octet => {
+      const num = parseInt(octet, 10);
+      return num >= 0 && num <= 255;
+    });
+    
+    if (port) {
+      const portNum = parseInt(port, 10);
+      return validIP && portNum >= 1 && portNum <= 65535;
+    }
+    
+    return validIP;
   }
   
   // Check for Internationalized Domain Names (IDN) in Punycode format (xn--...)
@@ -92,14 +113,21 @@ export function normalizeDomain(domain) {
   // Remove protocol (http://, https://, etc.)
   normalized = normalized.replace(/^(https?:\/\/|ftp:\/\/|wss?:\/\/)/i, '');
   
-  // Remove path, query parameters, and hash
-  normalized = normalized.split(/[\/\?\#]/)[0];
+  // Check if it's CIDR notation before removing path
+  const cidrRegex = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d{1,2}$/;
+  if (!cidrRegex.test(normalized)) {
+    // Remove path, query parameters, and hash (but not for CIDR)
+    normalized = normalized.split(/[\/\?\#]/)[0];
+  }
   
   // Remove leading dots
   normalized = normalized.replace(/^\./, '');
   
-  // Remove port number if present
-  normalized = normalized.replace(/:\d+$/, '');
+  // Don't remove port for IP addresses or CIDR notation
+  const ipWithPortRegex = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d+$/;
+  if (!ipWithPortRegex.test(normalized) && !cidrRegex.test(normalized)) {
+    normalized = normalized.replace(/:\d+$/, '');
+  }
   
   // Convert to lowercase
   normalized = normalized.toLowerCase();
